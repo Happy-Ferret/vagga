@@ -4,7 +4,7 @@ use std::fmt::{self, Write as WriteFmt};
 use std::path::{Path, PathBuf};
 use std::os::unix::ffi::OsStrExt;
 
-use sha2::{Sha256, Digest as DigestTrait};
+use sha2::{Sha256, Sha512, Digest as DigestTrait};
 use digest_writer::Writer;
 use rustc_serialize::json::Json;
 use config::Range;
@@ -33,7 +33,7 @@ struct DebugWriter {
 }
 
 /// A wrapper type used for hexlification, use `hex()` function
-pub struct ShowHex<'a>(&'a Sha256);
+pub struct ShowHex<'a, T: 'a>(&'a T);
 
 static LOWER_CHARS: &'static[u8] = b"0123456789abcdef";
 
@@ -138,9 +138,9 @@ impl fmt::LowerHex for Digest {
 }
 
 fn hexfmt(data: &[u8], f: &mut fmt::Formatter) -> fmt::Result {
-    assert!(data.len() == 32);
+    assert!(data.len() <= 64);
     let max_digits = f.precision().unwrap_or(data.len());
-    let mut res = [0u8; 64];
+    let mut res = [0u8; 128];
     for (i, c) in data.iter().take(max_digits).enumerate() {
         res[i*2] = LOWER_CHARS[(c >> 4) as usize];
         res[i*2+1] = LOWER_CHARS[(c & 0xF) as usize];
@@ -151,7 +151,13 @@ fn hexfmt(data: &[u8], f: &mut fmt::Formatter) -> fmt::Result {
     Ok(())
 }
 
-impl<'a> fmt::LowerHex for ShowHex<'a> {
+impl<'a> fmt::LowerHex for ShowHex<'a, Sha256> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        hexfmt(&self.0.result()[..], f)
+    }
+}
+
+impl<'a> fmt::LowerHex for ShowHex<'a, Sha512> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         hexfmt(&self.0.result()[..], f)
     }
@@ -262,6 +268,6 @@ impl<'a, T: Digestable> Digestable for &'a T {
 
 
 /// Zero-copy formatting of hash value with or without precision
-pub fn hex(src: &Sha256) -> ShowHex {
+pub fn hex<T>(src: &T) -> ShowHex<T> {
     ShowHex(&src)
 }
