@@ -28,7 +28,7 @@ enum Opt<W> {
 
 /// This just copies the hash data into a buffer for debugging
 struct DebugWriter {
-    sha: Writer<Sha256>,
+    sha: Writer<Sha512>,
     data: Opt<Vec<u8>>,
 }
 
@@ -42,7 +42,7 @@ impl Digest {
     pub fn new(debug: bool, raw_debug: bool) -> Digest {
         Digest {
             sha: DebugWriter {
-                sha: Writer::new(Sha256::new()),
+                sha: Writer::new(Sha512::new()),
                 data: if raw_debug { Opt::Out(Vec::new()) } else { Opt::Sink },
             },
             debug: if debug { Opt::Out(String::new()) } else { Opt::Sink },
