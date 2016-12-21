@@ -89,8 +89,8 @@ setup() {
     run vagga vagga-alpine
     printf "%s\n" "${lines[@]}"
     [[ $status -eq 0 ]]
-    [[ ${lines[${#lines[@]}-2]} = 6ea38cf8 ]]
-    [[ ${lines[${#lines[@]}-1]} = 6ea38cf8bd751ac737a41c6e1ddb4b87a804f8e562c30064ec42941005b7bc6f ]]
+    [[ ${lines[${#lines[@]}-2]} = c3394eb0 ]]
+    [[ ${lines[${#lines[@]}-1]} = c3394eb0e510330a2184491270a557d43d6f5f84c748db5a1b88c159ac1c1c32a53235a10d0248c366681724af6c19f817f04bee425118958295cbef3c8d2419 ]]
 }
 
 @test "alpine: AlpineRepo minimal" {
@@ -127,7 +127,7 @@ setup() {
     run vagga _build repo-simple
     printf "%s\n" "${lines[@]}"
     link=$(readlink .vagga/repo-simple)
-    [[ $link = ".roots/repo-simple.8c9ad301/root" ]]
+    [[ $link = ".roots/repo-simple.1a76ceb6/root" ]]
 
     [[ $(tail -n 1 ".vagga/repo-simple/etc/apk/repositories") = *"/v3.4/community" ]]
     repositories=($(sed "s/\/community/\/main/g" ".vagga/repo-simple/etc/apk/repositories"))
@@ -143,7 +143,7 @@ setup() {
     run vagga _build repo-with-branch
     printf "%s\n" "${lines[@]}"
     link=$(readlink .vagga/repo-with-branch)
-    [[ $link = ".roots/repo-with-branch.0cc41786/root" ]]
+    [[ $link = ".roots/repo-with-branch.92950c67/root" ]]
 
     [[ $(tail -n 1 ".vagga/repo-with-branch/etc/apk/repositories") = *"/edge/community" ]]
     repositories=($(sed "s/\/edge\/community/\/v3.4\/main/g" ".vagga/repo-with-branch/etc/apk/repositories"))
@@ -160,7 +160,7 @@ setup() {
     run vagga _build repo-subcontainer
     printf "%s\n" "${lines[@]}"
     link=$(readlink .vagga/repo-subcontainer)
-    [[ $link = ".roots/repo-subcontainer.0c8a531b/root" ]]
+    [[ $link = ".roots/repo-subcontainer.deadfee0/root" ]]
 
     run vagga _run repo-subcontainer tini -h
     printf "%s\n" "${lines[@]}"
