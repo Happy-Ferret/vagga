@@ -5,7 +5,7 @@ setup() {
 @test "alpine: Alpine builds" {
     vagga _build v31
     link=$(readlink .vagga/v31)
-    [[ $link = ".roots/v31.3bbd8dfc/root" ]]
+    [[ $link = ".roots/v31.c2685945/root" ]]
 }
 
 @test "alpine: Check stdout" {
@@ -13,7 +13,7 @@ setup() {
     printf "%s\n" "${lines[@]}"
     [[ $status = 0 ]]
     link=$(readlink .vagga/v33-tar)
-    [[ $link = ".roots/v33-tar.308cf7fd/root" ]]
+    [[ $link = ".roots/v33-tar.bec5f9d5/root" ]]
     [[ $output = "vagga.yaml" ]]
 }
 
@@ -41,7 +41,7 @@ setup() {
     [[ $status -eq 0 ]]
     [[ ${lines[${#lines[@]}-1]} = "2400" ]]
     link=$(readlink .vagga/v34-calc)
-    [[ $link = ".roots/v34-calc.02a0d1c1/root" ]]
+    [[ $link = ".roots/v34-calc.72452299/root" ]]
 }
 
 @test "alpine: Run bc on v3.3" {
@@ -50,7 +50,7 @@ setup() {
     [[ $status -eq 0 ]]
     [[ ${lines[${#lines[@]}-1]} = "2400" ]]
     link=$(readlink .vagga/v33-calc)
-    [[ $link = ".roots/v33-calc.52ba709f/root" ]]
+    [[ $link = ".roots/v33-calc.c0bb1626/root" ]]
 }
 
 @test "alpine: Run bc on v3.2" {
@@ -59,7 +59,7 @@ setup() {
     [[ $status -eq 0 ]]
     [[ ${lines[${#lines[@]}-1]} = "2400" ]]
     link=$(readlink .vagga/v32-calc)
-    [[ $link = ".roots/v32-calc.a3ffc64f/root" ]]
+    [[ $link = ".roots/v32-calc.740d7bfb/root" ]]
 }
 
 @test "alpine: Run bc on v3.1" {
@@ -68,7 +68,7 @@ setup() {
     [[ $status -eq 0 ]]
     [[ ${lines[${#lines[@]}-1]} = "2400" ]]
     link=$(readlink .vagga/v31-calc)
-    [[ $link = ".roots/v31-calc.c42da512/root" ]]
+    [[ $link = ".roots/v31-calc.4f6a8a69/root" ]]
 }
 
 @test "alpine: Run bc on v3.0" {
@@ -77,7 +77,7 @@ setup() {
     [[ $status -eq 0 ]]
     [[ ${lines[${#lines[@]}-1]} = "164" ]]
     link=$(readlink .vagga/v30-calc)
-    [[ $link = ".roots/v30-calc.a60099cd/root" ]]
+    [[ $link = ".roots/v30-calc.a68c41a8/root" ]]
 }
 
 @test "alpine: Run vagga inside alpine" {
@@ -97,7 +97,7 @@ setup() {
     run vagga _build alpine-repo
     printf "%s\n" "${lines[@]}"
     link=$(readlink .vagga/alpine-repo)
-    [[ $link = ".roots/alpine-repo.a3bfac74/root" ]]
+    [[ $link = ".roots/alpine-repo.02b226ea/root" ]]
 
     [[ $(tail -n 1 ".vagga/alpine-repo/etc/apk/repositories") = *"/v3.4/community" ]]
     repositories=($(sed "s/\/community/\/main/g" ".vagga/alpine-repo/etc/apk/repositories"))
@@ -113,7 +113,7 @@ setup() {
     run vagga _build alpine-repo-full
     printf "%s\n" "${lines[@]}"
     link=$(readlink .vagga/alpine-repo-full)
-    [[ $link = ".roots/alpine-repo-full.d9df2d08/root" ]]
+    [[ $link = ".roots/alpine-repo-full.1d03281c/root" ]]
 
     [[ $(tail -n 1 ".vagga/alpine-repo-full/etc/apk/repositories") = \
         "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" ]]
