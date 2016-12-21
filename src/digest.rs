@@ -139,14 +139,14 @@ impl fmt::LowerHex for Digest {
 
 fn hexfmt(data: &[u8], f: &mut fmt::Formatter) -> fmt::Result {
     assert!(data.len() <= 64);
-    let max_digits = f.precision().unwrap_or(data.len());
+    let max_digits = f.precision().unwrap_or(data.len()*2);
     let mut res = [0u8; 128];
-    for (i, c) in data.iter().take(max_digits).enumerate() {
+    for (i, c) in data.iter().take(max_digits/2+1).enumerate() {
         res[i*2] = LOWER_CHARS[(c >> 4) as usize];
         res[i*2+1] = LOWER_CHARS[(c & 0xF) as usize];
     }
     f.write_str(unsafe {
-        str::from_utf8_unchecked(&res[..max_digits*2])
+        str::from_utf8_unchecked(&res[..max_digits])
     })?;
     Ok(())
 }
