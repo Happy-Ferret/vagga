@@ -7,7 +7,7 @@ setup() {
     printf "%s\n" "${lines[@]}"
     [[ $status = 0 ]]
     link=$(readlink .vagga/dir-copy)
-    [[ $link = ".roots/dir-copy.623c828c/root" ]]
+    [[ $link = ".roots/dir-copy.781a47c8/root" ]]
 
     run vagga test-dir
     printf "%s\n" "${lines[@]}"
@@ -29,7 +29,7 @@ setup() {
 @test "copy: file" {
     vagga _build file-copy
     link=$(readlink .vagga/file-copy)
-    [[ $link = ".roots/file-copy.11c77679/root" ]]
+    [[ $link = ".roots/file-copy.7ad83313/root" ]]
 
     run vagga test-file
     printf "%s\n" "${lines[@]}"
@@ -44,7 +44,7 @@ setup() {
     printf "%s\n" "${lines[@]}"
     [[ $status = 0 ]]
     link=$(readlink .vagga/copy-non-work)
-    [[ $link = ".roots/copy-non-work.fc28d129/root" ]]
+    [[ $link = ".roots/copy-non-work.5d99d983/root" ]]
 
     [[ $(stat -c "%a" ".vagga/copy-non-work/dir.bak") = "775" ]]
     [[ $(stat -c "%a" ".vagga/copy-non-work/dir.bak/file") = "664" ]]
@@ -55,7 +55,7 @@ setup() {
     printf "%s\n" "${lines[@]}"
     [[ $status = 0 ]]
     link=$(readlink .vagga/copy-non-work-preserve-perms)
-    [[ $link = ".roots/copy-non-work-preserve-perms.43ad6669/root" ]]
+    [[ $link = ".roots/copy-non-work-preserve-perms.0a69e70c/root" ]]
 
     [[ $(stat -c "%a" ".vagga/copy-non-work-preserve-perms/dir.bak") = \
         $(stat -c "%a" ".vagga/copy-non-work-preserve-perms/dir") ]]
@@ -68,7 +68,7 @@ setup() {
     printf "%s\n" "${lines[@]}"
     [[ $status = 0 ]]
     link=$(readlink .vagga/copy-umask)
-    [[ $link = ".roots/copy-umask.1274551d/root" ]]
+    [[ $link = ".roots/copy-umask.98755219/root" ]]
 
     [[ $(stat -c "%a" ".vagga/copy-umask/dir") = "700" ]]
     [[ $(stat -c "%a" ".vagga/copy-umask/dir/hello") = "600" ]]
@@ -85,7 +85,7 @@ setup() {
     printf "%s\n" "${lines[@]}"
     [[ $status = 0 ]]
     link=$(readlink .vagga/copy-preserve-perms)
-    [[ $link = ".roots/copy-preserve-perms.4b4073e8/root" ]]
+    [[ $link = ".roots/copy-preserve-perms.ce6b370a/root" ]]
 
     [[ $(stat -c "%a" ".vagga/copy-preserve-perms/dir") = "770" ]]
     [[ $(stat -c "%a" ".vagga/copy-preserve-perms/dir/hello") = "660" ]]
@@ -104,7 +104,7 @@ setup() {
     run vagga _build copy-with-include
     printf "%s\n" "${lines[@]}"
     link=$(readlink .vagga/copy-with-include)
-    [[ $link = ".roots/copy-with-include.bbb2cdd4/root" ]]
+    [[ $link = ".roots/copy-with-include.c7333188/root" ]]
     [[ -f ".vagga/copy-with-include/dir/hello" ]]
     [[ -d ".vagga/copy-with-include/dir/subdir" ]]
     [[ -f ".vagga/copy-with-include/dir/subdir/file" ]]
@@ -115,10 +115,10 @@ setup() {
 @test "depends: include regex" {
     run vagga _version_hash --short depends-with-include
     printf "%s\n" "${lines[@]}"
-    [[ $output = "c15b89fc" ]]
+    [[ $output = "375d1004" ]]
 
     chmod 0755 dir/subdir
     run vagga _version_hash --short depends-with-include
     printf "%s\n" "${lines[@]}"
-    [[ $output = "c15b89fc" ]]
+    [[ $output = "375d1004" ]]
 }
